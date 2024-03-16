@@ -44,8 +44,9 @@ for i in range(n):
     y_res = [y.getOrdinat() for y in res]
     ax.clear()
     ax.plot(x_input_points, y_input_points, marker="p", c="r")
-    ax.plot(x_res, y_res, marker="o")
-    ax.set_title(f"Iterasi ke-{i+1}")
+    ax.plot(x_res, y_res, marker="o", label=f"Iterasi ke-{i+1}")
+    ax.set_title("Bezier Curve with Divide n' Conquer")
+    ax.legend()
     plt.pause(1.25)
 
 plt.show()
