@@ -8,5 +8,5 @@ Program bertujuan untuk merancang kurva bezier berdasarkan input 3 titik dan jum
 ## Program Running
 
 ## Authors
-13522030 - Imam Hanif Mulyarrahman
-13522076 - Muhammad Syarafi Akmal
+1. 13522030 - Imam Hanif Mulyarrahman
+2. 13522076 - Muhammad Syarafi Akmal
