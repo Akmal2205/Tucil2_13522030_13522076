@@ -36,7 +36,6 @@ def Divide_n_Conquer(n, p0, cp, p2, res):
 #Displaying, with a bit animation
 x_input_points = np.array([x.getAbsis() for x in ip])
 y_input_points = np.array([y.getOrdinat() for y in ip])
-lines = []
 fig, ax= plt.subplots()
 ax.plot(x_input_points, y_input_points, marker = "p", c = "r")
 for i in range(n):

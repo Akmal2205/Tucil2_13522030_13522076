@@ -32,28 +32,20 @@ def nAryDNC(control_point, iterasi) :
         res = np.concatenate((res, new_control_point))
         res = np.concatenate((res,nAryDNC(akhir, iterasi-1)))
         return res
-    
-def mainNTitikDNC() :
-    nTitik = int(input("Masukkan jumlah titik yang diinginkan = "))
-    arr_point = []
-    for i in range(nTitik) :
-        p = Insert_Point("p")
-        arr_point.append(p) 
-    iterasi = int(input("Masukkan jumlah iterasi: "))
-    while(iterasi<=0):
-        print("Input salah!, Masukkan ulang input >:(")
-        iterasi = int(input("Masukkan jumlah iterasi: "))
-    #Displaying, with a bit animation
-    x_input_points = np.array([x.getAbsis() for x in arr_point])
-    y_input_points = np.array([y.getOrdinat() for y in arr_point])
-    lines = []
-    fig, ax= plt.subplots()
+
+def plotAnimation(res, ip, n):
+    x_input_points = np.array([x.getAbsis() for x in ip])
+    y_input_points = np.array([y.getOrdinat() for y in ip])
+    fig, ax = plt.subplots()
     ax.plot(x_input_points, y_input_points, marker = "p", c = "r")
-    for i in range(iterasi):
-        res = nAryDNC(arr_point, iterasi)
-        res = np.concatenate((arr_point[0], res, arr_point[-1]))
+    for i in range(n):
+        res = []
+        res = nAryDNC(ip, i+1)
+        res = np.concatenate(([ip[0]], res, [ip[-1]]))
         x_res = [x.getAbsis() for x in res]
         y_res = [y.getOrdinat() for y in res]
+        x_input_points = [x.getAbsis() for x in ip]
+        y_input_points = [y.getOrdinat() for y in ip]
         ax.clear()
         ax.plot(x_input_points, y_input_points, marker="p", c="r")
         ax.plot(x_res, y_res, marker="o", label=f"Iterasi ke-{i+1}")
@@ -61,6 +53,20 @@ def mainNTitikDNC() :
         ax.legend()
         plt.pause(1.25)
 
+
+def mainNTitikDNC() :
+    nTitik = int(input("Masukkan jumlah titik yang diinginkan = "))
+    arr_point = []
+    for i in range(nTitik) :
+        p = Insert_Point(f"p{i+1}")
+        arr_point.append(p) 
+    iterasi = int(input("Masukkan jumlah iterasi: "))
+    while(iterasi<=0):
+        print("Input salah!, Masukkan ulang input >:(")
+        iterasi = int(input("Masukkan jumlah iterasi: "))
+    res = nAryDNC(arr_point, iterasi)
+    res = np.concatenate(([arr_point[0]], res, [arr_point[-1]]))
+    plotAnimation(res, arr_point, iterasi)
     plt.show()
 
 if __name__ == "__main__" :
