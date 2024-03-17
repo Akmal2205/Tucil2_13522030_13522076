@@ -1,4 +1,5 @@
 from point import Point
+import time
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -64,8 +65,11 @@ def mainNTitikDNC() :
     while(iterasi<=0):
         print("Input salah!, Masukkan ulang input >:(")
         iterasi = int(input("Masukkan jumlah iterasi: "))
+    start = time.time()
     res = nAryDNC(arr_point, iterasi)
     res = np.concatenate(([arr_point[0]], res, [arr_point[-1]]))
+    end = time.time()
+    print(f"Time taken: {(end-start)*10**3:.03f}ms")
     plotAnimation(res, arr_point, iterasi)
     plt.show()
 
