@@ -2,7 +2,6 @@ from point import Point
 import matplotlib.pyplot as plt
 import numpy as np
 
-
 #Helping Functions
 def Insert_Point(pn):
     point = [float(x) for x in input(f"Masukkan titik {pn} (x,y): ").split(",")]
@@ -32,6 +31,7 @@ def Divide_n_Conquer(n, p0, cp, p2, res):
     else:
         Divide_n_Conquer(n-1, p0, mid_point(p0, cp), mid_section(p0, cp, p2), res) #left
         Divide_n_Conquer(n-1, mid_section(p0, cp, p2), mid_point(p2, cp), p2, res) #right
+    res.append(p2)
 
 #Displaying, with a bit animation
 x_input_points = np.array([x.getAbsis() for x in ip])
@@ -42,7 +42,6 @@ ax.plot(x_input_points, y_input_points, marker = "p", c = "r")
 for i in range(n):
     res = []
     Divide_n_Conquer(i+1, p0, p1, p2, res)
-    res.append(p2)
     x_res = [x.getAbsis() for x in res]
     y_res = [y.getOrdinat() for y in res]
     ax.clear()
