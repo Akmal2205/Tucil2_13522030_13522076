@@ -8,6 +8,20 @@ def Insert_Point(pn):
     point = [float(x) for x in input(f"Masukkan titik {pn} (x,y): ").split(",")]
     return Point(point[0], point[1])
 
+def isSamePoint(p1: Point, p2: Point):
+    return (p1.x == p2.x and p1.y == p2.y)
+
+def uniqueArray(array):
+    for i in range(len(array)-1):
+        for j in range(i+1,len(array)):
+            if array[i]!="null" and array[j]!="null" and isSamePoint(array[i], array[j]):
+                array[j] = "null"
+    res=[]
+    for el in array:
+        if el!="null":
+            res.append(el)
+    return res
+
 def mid_point(p0: Point, p2: Point):
     return Point((p0.getAbsis()+p2.getAbsis())/float(2), (p0.getOrdinat()+p2.getOrdinat())/float(2))
 
@@ -52,7 +66,16 @@ def maindnc() :
     p1 = Insert_Point("p1")
     p2 = Insert_Point("p2")
     ip=[p0,p1,p2]
-
+    ip = uniqueArray(ip)
+    while len(ip) < 3:
+        print("Masukkan 3 titik berbeda!")
+        p0 = Insert_Point("p0")
+        p1 = Insert_Point("p1")
+        p2 = Insert_Point("p2")
+        ip=[p0,p1,p2]
+        ip = uniqueArray(ip)
+    
     #Displaying, with a bit animation
     plotAnimation(ip, n)
     plt.show()
+    
