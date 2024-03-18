@@ -10,11 +10,11 @@ def main() :
     print("2. Algoritma Divide and Conquer dengan 3 titik")
     print("3. Algoritma Divide and Conquer dengan n titik (n >= 3)")
 
-    pilihan = input("Masukkan Pilihan Anda ")
+    pilihan = input("Masukkan Pilihan Anda : ")
 
     while pilihan != '1' and pilihan != '2' and pilihan != '3' :
         print("Masukkan tidak valid! Silahkan ulangi kembali")
-        pilihan = input("Masukkan Pilihan Anda ")
+        pilihan = input("Masukkan Pilihan Anda : ")
     
     if pilihan == '1' :
         KurvaBezierBruteForce.mainbf()
@@ -23,6 +23,6 @@ def main() :
     elif pilihan == '3' :
         nTitikDNC.mainNTitikDNC()
 
-    print("Terima Kasih")
+    print("Terima Kasih :D")
 
 main()

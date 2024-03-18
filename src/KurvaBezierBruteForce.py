@@ -18,43 +18,37 @@ def bezierBF(p0,p1,p2,iterasi) :
         arraybezier.append(Point(b[0],b[1]))
     return arraybezier
 
-# def plot_bezier_curve(control_points, curve_points):
-#     plt.plot(control_points[:, 0], control_points[:, 1], 'ro-', label='Control Points')
-#     plt.plot(curve_points[:, 0], curve_points[:, 1], 'b-', label='Bezier Curve')
-#     plt.title('Bezier Curve with Brute Force')
-#     plt.legend()
-#     plt.show()
+def plotAnimation(ip, n):
+    x_input_points = np.array([x.getAbsis() for x in ip])
+    y_input_points = np.array([y.getOrdinat() for y in ip])
+    for i in range(n):
+        res = []
+        res = bezierBF(ip[0],ip[1],ip[2], i+1)
+        res = np.concatenate(([ip[0]], res, [ip[-1]]))
+        x_res = [x.getAbsis() for x in res]
+        y_res = [y.getOrdinat() for y in res]
+        x_input_points = [x.getAbsis() for x in ip]
+        y_input_points = [y.getOrdinat() for y in ip]
+        plt.clf()
+        plt.plot(x_input_points, y_input_points, marker="p", c="r")
+        plt.plot(x_res, y_res, marker="o", label=f"Iterasi ke-{i+1}")
+        plt.title("Bezier Curve with Divide n' Conquer")
+        plt.legend()
+        plt.pause(1.25)
 
 def mainbf() :
     #Inputs
-    n = int(input("Masukkan jumlah iterasi: "))
+    n = int(input("Masukkan jumlah iterasi : "))
     while(n<=0):
         print("Input salah!, Masukkan ulang input >:(")
-        n = int(input("Masukkan jumlah iterasi: "))
+        n = int(input("Masukkan jumlah iterasi : "))
     p0 = Insert_Point("p0")
     p1 = Insert_Point("p1")
     p2 = Insert_Point("p2")
     ip=[p0,p1,p2]
 
     #Displaying, with a bit animation
-    x_input_points = np.array([x.getAbsis() for x in ip])
-    y_input_points = np.array([y.getOrdinat() for y in ip])
-    fig, ax= plt.subplots()
-    ax.plot(x_input_points, y_input_points, marker = "p", c = "r")
-    for i in range(n):
-        start = time.time()
-        res = bezierBF(p0, p1, p2, i+1)
-        end = time.time()
-        print(f"Time taken: {(end-start)*10**3:.03f}ms")
-        x_res = [x.getAbsis() for x in res]
-        y_res = [y.getOrdinat() for y in res]
-        ax.clear()
-        ax.plot(x_input_points, y_input_points, marker="p", c="r")
-        ax.plot(x_res, y_res, marker="o", label=f"Iterasi ke-{i+1}")
-        ax.set_title("Bezier Curve with Divide n' Conquer")
-        ax.legend()
-        plt.pause(1.25)
-
+    plotAnimation(ip, n)
     plt.show()
 
 if __name__ == "__main__" :

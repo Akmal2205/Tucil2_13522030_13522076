@@ -3,6 +3,7 @@ import time
 import matplotlib.pyplot as plt
 import numpy as np
 
+#Helping Functions
 def Insert_Point(pn):
     point = [float(x) for x in input(f"Masukkan titik {pn} (x,y): ").split(",")]
     return Point(point[0], point[1])
@@ -21,6 +22,7 @@ def titikAproksimasi(control_point, pinggiran) :
         pinggir = np.concatenate(([control_point[0]], pinggir, [control_point[-1]]))
         return titik, pinggir
     
+#Main Function
 def nAryDNC(control_point, iterasi) :
     new_control_point, old_control_point = titikAproksimasi(control_point,[])
     if iterasi == 1 :
@@ -34,11 +36,10 @@ def nAryDNC(control_point, iterasi) :
         res = np.concatenate((res,nAryDNC(akhir, iterasi-1)))
         return res
 
-def plotAnimation(res, ip, n):
+#Visual Bonus Function
+def plotAnimation(ip, n):
     x_input_points = np.array([x.getAbsis() for x in ip])
     y_input_points = np.array([y.getOrdinat() for y in ip])
-    fig, ax = plt.subplots()
-    ax.plot(x_input_points, y_input_points, marker = "p", c = "r")
     for i in range(n):
         res = []
         res = nAryDNC(ip, i+1)
@@ -47,30 +48,38 @@ def plotAnimation(res, ip, n):
         y_res = [y.getOrdinat() for y in res]
         x_input_points = [x.getAbsis() for x in ip]
         y_input_points = [y.getOrdinat() for y in ip]
-        ax.clear()
-        ax.plot(x_input_points, y_input_points, marker="p", c="r")
-        ax.plot(x_res, y_res, marker="o", label=f"Iterasi ke-{i+1}")
-        ax.set_title("Bezier Curve with Divide n' Conquer")
-        ax.legend()
+        plt.clf()
+        plt.plot(x_input_points, y_input_points, marker="p", c="r")
+        plt.plot(x_res, y_res, marker="o", label=f"Iterasi ke-{i+1}")
+        plt.title("Bezier Curve with Divide n' Conquer")
+        plt.legend()
         plt.pause(1.25)
 
-
-def mainNTitikDNC() :
-    nTitik = int(input("Masukkan jumlah titik yang diinginkan = "))
-    arr_point = []
-    for i in range(nTitik) :
-        p = Insert_Point(f"p{i+1}")
-        arr_point.append(p) 
-    iterasi = int(input("Masukkan jumlah iterasi: "))
-    while(iterasi<=0):
-        print("Input salah!, Masukkan ulang input >:(")
-        iterasi = int(input("Masukkan jumlah iterasi: "))
+def bezier_time_taken(arr_point, iterasi):
     start = time.time()
     res = nAryDNC(arr_point, iterasi)
     res = np.concatenate(([arr_point[0]], res, [arr_point[-1]]))
     end = time.time()
     print(f"Time taken: {(end-start)*10**3:.03f}ms")
-    plotAnimation(res, arr_point, iterasi)
+
+
+def mainNTitikDNC() :
+    #Inputs
+    iterasi = int(input("Masukkan jumlah iterasi : "))
+    while(iterasi<=0):
+        print("Input salah!, Masukkan ulang input >:(")
+        iterasi = int(input("Masukkan jumlah iterasi : "))
+    nTitik = int(input("Masukkan jumlah titik yang diinginkan : "))
+    arr_point = []
+    for i in range(nTitik) :
+        p = Insert_Point(f"p{i+1}")
+        arr_point.append(p) 
+
+    #Show time taken
+    bezier_time_taken(arr_point, iterasi)
+
+    #Displaying
+    plotAnimation(arr_point, iterasi)
     plt.show()
 
 if __name__ == "__main__" :

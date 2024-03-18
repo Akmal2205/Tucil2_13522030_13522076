@@ -14,45 +14,45 @@ def mid_point(p0: Point, p2: Point):
 def mid_section(p0: Point, cp: Point, p2: Point):
     return mid_point(mid_point(p0, cp), mid_point(cp, p2))
 
+#Main Function
+def Divide_n_Conquer(n, p0, cp, p2, res):
+    if (n==1):
+        res.append(p0)
+        res.append(mid_section(p0, cp, p2))
+    else:
+        Divide_n_Conquer(n-1, p0, mid_point(p0, cp), mid_section(p0, cp, p2), res) #left
+        Divide_n_Conquer(n-1, mid_section(p0, cp, p2), mid_point(p2, cp), p2, res) #right
+    res.append(p2)
+
+#Visual Bonus Function
+def plotAnimation(ip, n):
+    for i in range(n):
+        res = []
+        Divide_n_Conquer(i+1, ip[0], ip[1], ip[2], res)
+        res = np.concatenate(([ip[0]], res, [ip[-1]]))
+        x_res = [x.getAbsis() for x in res]
+        y_res = [y.getOrdinat() for y in res]
+        x_input_points = [x.getAbsis() for x in ip]
+        y_input_points = [y.getOrdinat() for y in ip]
+        plt.clf()
+        plt.plot(x_input_points, y_input_points, marker="p", c="r")
+        plt.plot(x_res, y_res, marker="o", label=f"Iterasi ke-{i+1}")
+        plt.title("Bezier Curve with Divide n' Conquer")
+        plt.legend()
+        plt.pause(1.25)
+
+
 def maindnc() :
     #Inputs
     n = int(input("Masukkan jumlah iterasi: "))
     while(n<=0):
         print("Input salah!, Masukkan ulang input >:(")
-        n = int(input("Masukkan jumlah iterasi: "))
+        n = int(input("Masukkan jumlah iterasi : "))
     p0 = Insert_Point("p0")
     p1 = Insert_Point("p1")
     p2 = Insert_Point("p2")
     ip=[p0,p1,p2]
 
-    #Main Function
-    def Divide_n_Conquer(n, p0, cp, p2, res):
-        if (n==1):
-            res.append(p0)
-            res.append(mid_section(p0, cp, p2))
-        else:
-            Divide_n_Conquer(n-1, p0, mid_point(p0, cp), mid_section(p0, cp, p2), res) #left
-            Divide_n_Conquer(n-1, mid_section(p0, cp, p2), mid_point(p2, cp), p2, res) #right
-        res.append(p2)
-
     #Displaying, with a bit animation
-    x_input_points = np.array([x.getAbsis() for x in ip])
-    y_input_points = np.array([y.getOrdinat() for y in ip])
-    fig, ax= plt.subplots()
-    ax.plot(x_input_points, y_input_points, marker = "p", c = "r")
-    for i in range(n):
-        res = []
-        start = time.time()
-        Divide_n_Conquer(i+1, p0, p1, p2, res)
-        end = time.time()
-        print(f"Time taken: {(end-start)*10**3:.03f}ms")
-        x_res = [x.getAbsis() for x in res]
-        y_res = [y.getOrdinat() for y in res]
-        ax.clear()
-        ax.plot(x_input_points, y_input_points, marker="p", c="r")
-        ax.plot(x_res, y_res, marker="o", label=f"Iterasi ke-{i+1}")
-        ax.set_title("Bezier Curve with Divide n' Conquer")
-        ax.legend()
-        plt.pause(1.25)
-
+    plotAnimation(ip, n)
     plt.show()
