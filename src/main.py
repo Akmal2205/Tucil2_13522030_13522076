@@ -16,6 +16,7 @@ def main() :
         print("Masukkan tidak valid! Silahkan ulangi kembali")
         pilihan = input("Masukkan Pilihan Anda : ")
     
+    print()
     if pilihan == '1' :
         mBruteForce.mainbf()
     elif pilihan == '2' :
@@ -23,6 +24,6 @@ def main() :
     elif pilihan == '3' :
         BonusNTitikDNC.mainNTitikDNC()
 
-    print("Terima Kasih :D")
+    print("\nTerima Kasih :D")
 
 main()

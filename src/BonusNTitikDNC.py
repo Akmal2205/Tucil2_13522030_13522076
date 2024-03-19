@@ -11,9 +11,6 @@ def Insert_Point(pn):
 def mid_point(p0: Point, p2: Point):
     return Point((p0.getAbsis()+p2.getAbsis())/float(2), (p0.getOrdinat()+p2.getOrdinat())/float(2))
 
-def isSamePoint(p1: Point, p2: Point):
-    return (p1.x == p2.x and p1.y == p2.y)
-
 def titikAproksimasi(control_point, pinggiran) :
     if len(control_point) <= 1 :
         return control_point, control_point
@@ -24,17 +21,6 @@ def titikAproksimasi(control_point, pinggiran) :
         titik, pinggir = titikAproksimasi(titik_aproksimasi,pinggiran)
         pinggir = np.concatenate(([control_point[0]], pinggir, [control_point[-1]]))
         return titik, pinggir
-    
-def uniqueArray(array):
-    for i in range(len(array)-1):
-        for j in range(i+1,len(array)):
-            if array[i]!="null" and array[j]!="null" and isSamePoint(array[i], array[j]):
-                array[i] = "null"
-    res=[]
-    for el in array:
-        if el!="null":
-            res.append(el)
-    return res
     
 #Main Function
 def nAryDNC(control_point, iterasi) :
@@ -83,20 +69,17 @@ def mainNTitikDNC() :
     while(iterasi<=0):
         print("Input salah!, Masukkan ulang input >:(")
         iterasi = int(input("Masukkan jumlah iterasi : "))
+        
     nTitik = int(input("Masukkan jumlah titik yang diinginkan : "))
+    while(nTitik<3):
+        print("Input tidak valid!, Masukkan ulang input dengan n >= 3 >:(")
+        nTitik = int(input("Masukkan jumlah iterasi : "))
+
     arr_point = []
     for i in range(nTitik) :
         p = Insert_Point(f"p{i+1}")
         arr_point.append(p) 
-    arr_point = uniqueArray(arr_point)
-    while len(arr_point) < 3:
-        print("Masukkan minimal lebih dari 3 titik berbeda!")
-        arr_point = []
-        for i in range(nTitik) :
-            p = Insert_Point(f"p{i+1}")
-            arr_point.append(p) 
-        arr_point = uniqueArray(arr_point)
-
+    
     #Show time taken
     bezier_time_taken(arr_point, iterasi)
 
