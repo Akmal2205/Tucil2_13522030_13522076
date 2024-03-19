@@ -30,11 +30,17 @@ def plotAnimation(ip, n):
         x_input_points = [x.getAbsis() for x in ip]
         y_input_points = [y.getOrdinat() for y in ip]
         plt.clf()
-        plt.plot(x_input_points, y_input_points, marker="p", c="r")
+        plt.plot(x_input_points, y_input_points, marker="p", c="r", label='Control Points')
         plt.plot(x_res, y_res, marker="o", label=f"Iterasi ke-{i+1}")
-        plt.title("Bezier Curve with Divide n' Conquer")
+        plt.title("Bezier Curve with Brute Force")
         plt.legend()
         plt.pause(1.25)
+
+def bezier_time_taken(arr_point, iterasi):
+    start = time.time()
+    res = bezierBF(arr_point[0], arr_point[1], arr_point[2] ,  iterasi)
+    end = time.time()
+    print(f"Time taken: {(end-start)*10**3:.03f}ms")
 
 def mainbf() :
     #Inputs
@@ -46,6 +52,9 @@ def mainbf() :
     p1 = Insert_Point("p1")
     p2 = Insert_Point("p2")
     ip=[p0,p1,p2]
+
+    #Show time taken
+    bezier_time_taken(ip, n)
 
     #Displaying, with a bit animation
     plotAnimation(ip, n)

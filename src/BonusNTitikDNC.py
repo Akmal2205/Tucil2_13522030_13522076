@@ -63,7 +63,7 @@ def plotAnimation(ip, n):
         x_input_points = [x.getAbsis() for x in ip]
         y_input_points = [y.getOrdinat() for y in ip]
         plt.clf()
-        plt.plot(x_input_points, y_input_points, marker="p", c="r")
+        plt.plot(x_input_points, y_input_points, marker="p", c="r", label = "Control Points")
         plt.plot(x_res, y_res, marker="o", label=f"Iterasi ke-{i+1}")
         plt.title("Bezier Curve with Divide n' Conquer")
         plt.legend()

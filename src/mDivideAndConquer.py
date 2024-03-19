@@ -49,11 +49,19 @@ def plotAnimation(ip, n):
         x_input_points = [x.getAbsis() for x in ip]
         y_input_points = [y.getOrdinat() for y in ip]
         plt.clf()
-        plt.plot(x_input_points, y_input_points, marker="p", c="r")
+        plt.plot(x_input_points, y_input_points, marker="p", c="r", label='Control Points')
         plt.plot(x_res, y_res, marker="o", label=f"Iterasi ke-{i+1}")
         plt.title("Bezier Curve with Divide n' Conquer")
         plt.legend()
         plt.pause(1.25)
+
+def bezier_time_taken(ip, iterasi):
+    start = time.time()
+    res = []
+    Divide_n_Conquer(iterasi, ip[0], ip[1], ip[2], res)
+    res = np.concatenate(([ip[0]], res, [ip[-1]]))
+    end = time.time()
+    print(f"Time taken: {(end-start)*10**3:.03f}ms")
 
 
 def maindnc() :
@@ -75,7 +83,12 @@ def maindnc() :
         ip=[p0,p1,p2]
         ip = uniqueArray(ip)
     
+    #Show time taken
+    bezier_time_taken(ip, n)
+
     #Displaying, with a bit animation
     plotAnimation(ip, n)
     plt.show()
     
+if __name__ == "__main__" :
+    maindnc()

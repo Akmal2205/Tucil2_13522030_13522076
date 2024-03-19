@@ -1,6 +1,6 @@
-import KurvaBezierBruteForce
-import divide_n_conquer
-import nTitikDNC
+import mBruteForce
+import mDivideAndConquer
+import BonusNTitikDNC
 
 def main() :
     print("Selamat Datang Pada Hasil Pengerjaan Tugas Kecil Pembuatan Kurva Bezier Kami")
@@ -17,11 +17,11 @@ def main() :
         pilihan = input("Masukkan Pilihan Anda : ")
     
     if pilihan == '1' :
-        KurvaBezierBruteForce.mainbf()
+        mBruteForce.mainbf()
     elif pilihan == '2' :
-        divide_n_conquer.maindnc()
+        mDivideAndConquer.maindnc()
     elif pilihan == '3' :
-        nTitikDNC.mainNTitikDNC()
+        BonusNTitikDNC.mainNTitikDNC()
 
     print("Terima Kasih :D")
 
